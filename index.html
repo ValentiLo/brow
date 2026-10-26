@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карточки товаров</title>
+    <style>
+         <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Сброс базовых стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f1ea; /* Светло-кремовый фон */
+    font-family: 'Montserrat', sans-serif;
+    color: #1e2d3b; /* Темно-синий цвет текста */
+}
+
+/* Основной контейнер шапки */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* --- Логотип --- */
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: #1e2d3b;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1;
+}
+
+.logo-number {
+    font-size: 20px;
+    margin-left: 2px;
+    margin-top: 5px;
+}
+
+/* --- Навигация --- */
+.nav ul {
+    display: flex;
+    list-style: none;
+    gap: 35px; /* Расстояние между ссылками */
+}
+
+.nav a {
+    text-decoration: none;
+    color: #1e2d3b;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+/* Подчеркивание для активного пункта и при наведении */
+.nav a.active::after,
+.nav a:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #1e2d3b;
+}
+
+/* --- Контакты --- */
+.contacts {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.phone-info {
+    text-align: right;
+}
+
+.phone {
+    display: block;
+    text-decoration: none;
+    color: #1e2d3b;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.address {
+    font-size: 12px;
+    color: #4a5b6d;
+    line-height: 1.3;
+}
+
+/* --- Кнопки соцсетей --- */
+.socials {
+    display: flex;
+    gap: 10px;
+}
+
+.social-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #1e2d3b;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border: 1px solid #1e2d3b;
+    border-radius: 20px; /* Овальные кнопки */
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background-color: #1e2d3b;
+    color: #f4f1ea;
+}
+        /* Базовые настройки */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Контейнер для карточек товаров */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Базовые стили карточки товара */
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Картинка */
+        .product-card__image {
+            margin: 0;
+            width: 100%;
+            height: 200px; /* Фиксированная высота, чтобы карточки были ровными */
+            background: #eaeaea;
+            overflow: hidden;
+        }
+        .product-card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Картинка заполняет блок без искажений */
+            display: block;
+        }
+
+        /* Контентная часть */
+        .product-card__content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Растягивает контент, чтобы футер был прижат к низу */
+        }
+
+        .product-card__title {
+            margin: 0 0 8px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .product-card__description {
+            margin: 0 0 16px;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Футер с ценой и кнопкой */
+        .product-card__footer {
+            margin-top: auto; /* Прижимает футер к низу карточки */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .product-card__price {
+            font-size: 18px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .product-card__button {
+            background-color: #284d60;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .product-card__button:hover {
+            background-color: #3a6174;
+        }
+
+        /* --- Медиа-запросы --- */
+
+        /* Для планшетов */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .product-card__content {
+                padding: 12px;
+            }
+            .product-card__title {
+                font-size: 16px;
+            }
+            .product-card__description {
+                font-size: 13px;
+            }
+        }
+
+        /* Для мобильных устройств */
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                padding: 12px;
+            }
+            .product-card {
+                flex-direction: row;
+                height: 140px;
+                border-radius: 8px;
+            }
+            .product-card__image {
+                width: 40%;
+                height: 100%;
+                flex-shrink: 0;
+            }
+            .product-card__content {
+                width: 60%;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+            }
+            .product-card__description {
+                display: none; /* Скрываем описание на мобильных */
+            }
+            .product-card__title {
+                font-size: 15px;
+                margin-bottom: 4px;
+            }
+            .product-card__footer {
+                margin-top: auto;
+                flex-wrap: wrap; /* Разрешаем перенос, если не влезает */
+                gap: 5px;
+            }
+            .product-card__price {
+                font-size: 15px;
+            }
+            .product-card__button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <header class="header">
+        <!-- Логотип -->
+        <div class="logo">
+            <span>Saveli</span><span class="logo-number">©</span>
+        </div>
+
+        <!-- Навигация -->
+        <nav class="nav">
+            <ul>
+                <li><a href="#" class="active">О салоне</a></li>
+                <li><a href="#">Прайс</a></li>
+                <li><a href="#">Работы</a></li>
+                <li><a href="#">Адрес</a></li>
+            </ul>
+        </nav>
+
+        <!-- Контакты и соцсети -->
+        <div class="contacts">
+            <div class="phone-info">
+                <a href="tel:+79299093221" class="phone">+7 (929) 909-32-21</a>
+                <p class="address">Москва, Привольная,<br>владение 2, строение 3</p>
+            </div>
+            <div class="socials">
+                <a href="#" class="social-btn">Telegram</a>
+                <a href="#" class="social-btn">MAX</a>
+                <a href="#" class="social-btn">WhatsApp</a>
+            </div>
+        </div>
+    </header>
+
+    
+    <main class="products-grid">
+        
+        <article class="product-card">
+            <figure class="product-card__image">
+                <img src="ламинирование1.jpg" alt="Ламинирование бровей">
+            </figure>
+            <div class="product-card__content">
+                <h3 class="product-card__title">Ламинирование бровей</h3>
+                <p class="product-card__description">Долговременная укладка, придающая бровям объем и аккуратную форму.</p>
+                <div class="product-card__footer">
+                    <span class="product-card__price">1 299 ₽</span>
+                    <button class="product-card__button">Подробнее</button>
+                </div>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <figure class="product-card__image">
+                <img src="окрашивание.jfif" alt="Окрашивание бровей">
+            </figure>
+            <div class="product-card__content">
+                <h3 class="product-card__title">Окрашивание бровей</h3>
+                <p class="product-card__description">Стойкое окрашивание краской или хной для насыщенного цвета.</p>
+                <div class="product-card__footer">
+                    <span class="product-card__price">1 299 ₽</span>
+                    <button class="product-card__button">Подробнее</button>
+                </div>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <figure class="product-card__image">
+                <img src="архитектура бровей.jfif" alt="Архитектура бровей">
+            </figure>
+            <div class="product-card__content">
+                <h3 class="product-card__title">Архитектура бровей</h3>
+                <p class="product-card__description">Построение идеальной формы с учетом черт лица и пожеланий.</p>
+                <div class="product-card__footer">
+                    <span class="product-card__price">1 299 ₽</span>
+                    <button class="product-card__button">Подробнее</button>
+                </div>
+            </div>
+        </article>
+
+        <article class="product-card">
+            <figure class="product-card__image">
+                <img src="коррекция бровей.jfif" alt="Коррекция бровей">
+            </figure>
+            <div class="product-card__content">
+                <h3 class="product-card__title">Коррекция бровей</h3>
+                <p class="product-card__description">Удаление лишних волосков и поддержание чистоты контура.</p>
+                <div class="product-card__footer">
+                    <span class="product-card__price">1 299 ₽</span>
+                    <button class="product-card__button">Подробнее</button>
+                </div>
+            </div>
+        </article>
+        <article class="product-card">
+            <figure class="product-card__image">
+                <img src="ламинирование ресниц.jfif" alt="Ламинирование ресниц">
+            </figure>
+            <div class="product-card__content">
+                <h3 class="product-card__title">Ламинирование ресниц</h3>
+                <p class="product-card__description">Долговременная укладка, придающая бровям объем и аккуратную форму.</p>
+                <div class="product-card__footer">
+                    <span class="product-card__price">1 299 ₽</span>
+                    <button class="product-card__button">Подробнее</button>
+                </div>
+            </div>
+        </article>
+        <article class="product-card">
+            <figure class="product-card__image">
+                <img src="Окрашивание ресниц.jfif" alt="Окрашивание ресниц">
+            </figure>
+            <div class="product-card__content">
+                <h3 class="product-card__title">Окрашивание ресниц</h3>
+                <p class="product-card__description">Долговременная укладка, придающая бровям объем и аккуратную форму.</p>
+                <div class="product-card__footer">
+                    <span class="product-card__price">1 299 ₽</span>
+                    <button class="product-card__button">Подробнее</button>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+</body>
+</html>
